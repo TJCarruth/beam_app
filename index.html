@@ -142,7 +142,7 @@
     const $ = id => document.getElementById(id);
     let state = { support:'simple', span:20, material:'steel', section:'W12x26', limit:360, loads:[{type:'uniform', w:1, start:0, end:20}] };
     const fmt = (n,d=2) => Number(n).toFixed(d);
-    function syncSpan(v) { state.span=Math.max(4,Math.min(40,Number(v)||4)); $('spanRange').value=state.span; $('spanInput').value=state.span; state.loads.forEach(l=>{if(l.type==='uniform')l.end=Math.min(l.end,state.span)}); render(); }
+    function syncSpan(v) { const span=Number(v); state.span=Number.isFinite(span)?Math.max(4,Math.min(40,span)):4; $('spanRange').value=state.span; $('spanInput').value=state.span; state.loads.forEach(l=>{if(l.type==='uniform')l.end=Math.min(Number.isFinite(l.end)?l.end:state.span,state.span)}); render(); }
     function sectionData(name=state.section) { return (state.material==='steel'?steel:wood).find(s=>s[0]===name) || (state.material==='steel'?steel:wood)[0]; }
     function updateSections() { const arr=state.material==='steel'?steel:wood; $('section').innerHTML=arr.map(s=>`<option value="${s[0]}">${s[0]}</option>`).join(''); if(!arr.some(s=>s[0]===state.section)) state.section=arr[0][0]; $('section').value=state.section; const s=sectionData(); $('sectionMeta').textContent=`Ix ${s[1]} in⁴ · Sx ${s[2]} in³${state.material==='steel'?` · ${s[3]} lb/ft`:''}`; }
     function renderLoads() {
@@ -152,7 +152,7 @@
       $('loads').querySelectorAll('[data-remove]').forEach(el=>el.onclick=()=>{state.loads.splice(+el.dataset.remove,1);render();});
     }
     function calc() {
-      const L=state.span, pts=[]; for(let x=0;x<=L+.0001;x+=Math.max(.05,L/360))pts.push(Math.min(L,x)); state.loads.forEach(l=>{if(l.type==='point')pts.push(Math.min(L,l.x));else{pts.push(Math.min(L,l.start),Math.min(L,l.end))}}); pts.push(0,L); pts.sort((a,b)=>a-b); const xs=[new Set(pts.map(x=>+x.toFixed(5)))];
+      const L=state.span, pts=[]; for(let x=0;x<=L+.0001;x+=Math.max(.05,L/360))pts.push(Math.min(L,x)); state.loads.forEach(l=>{if(l.type==='point')pts.push(Math.min(L,l.x));else{pts.push(Math.min(L,l.start),Math.min(L,l.end))}}); pts.push(0,L); pts.sort((a,b)=>a-b); const xs=[...new Set(pts.map(x=>+x.toFixed(5)))];
       let total=0,moment=0; state.loads.forEach(l=>{if(l.type==='point'){total+=l.p;moment+=l.p*l.x}else{const a=Math.max(0,Math.min(L,l.start)),b=Math.max(a,Math.min(L,l.end)),w=Math.max(0,l.w),q=w*(b-a);total+=q;moment+=q*(a+b)/2}});
       const rl=state.support==='simple'?(L?total-moment/L:0):total, rr=state.support==='simple'?(L?moment/L:0):0;
       function values(x){if(state.support==='cantilever'){let v=0,m=0;state.loads.forEach(l=>{if(l.type==='point'&&l.x>=x){v-=l.p;m-=l.p*(l.x-x)}if(l.type==='uniform'){const a=Math.max(x,Math.max(0,l.start)),b=Math.min(L,l.end),len=Math.max(0,b-a);if(len>0){v-=l.w*len;m-=l.w*len*((a+b)/2-x)}}});return {v,m};}let v=rl,m=rl*x; state.loads.forEach(l=>{if(l.type==='point'&&x>=l.x){v-=l.p;m-=l.p*(x-l.x)}if(l.type==='uniform'){const a=Math.max(0,l.start),b=Math.min(L,l.end),len=Math.max(0,Math.min(x,b)-a);if(len>0){v-=l.w*len;m-=l.w*len*(x-(a+Math.min(x,b))/2)}}}); return {v,m};}
