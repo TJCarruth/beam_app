@@ -39,69 +39,81 @@ The model uses downward load magnitudes as positive input values. Lengths are en
 
 ### Resultant loads and reactions
 
-For a point load `P` at `a`, the resultant is `P` at `a`. For a uniform load `w` between `a` and `b`:
+For a point load $P_i$ at $a_i$, the resultant is $P_i$ at $a_i$. A uniform load $w_j$ from $a_j$ to $b_j$ is replaced by its equivalent force and centroid:
 
-```text
-Q = w (b - a)                 resultant force (kips)
-xQ = (a + b) / 2             resultant location (ft)
-```
+$$
+\begin{aligned}
+Q_j &= w_j (b_j-a_j) && \text{resultant force (kips)} \\
+x_{Q_j} &= \frac{a_j+b_j}{2} && \text{resultant location (ft)}
+\end{aligned}
+$$
 
-Summing all loads gives `W = ΣQ` and their first moment about the left end gives `J = Σ(Q xQ)`. For a simply supported span `L`:
+Let $W$ be the sum of all resultant forces and $J$ their first moment about the left end. For a simply supported span $L$:
 
-```text
-Rright = J / L
-Rleft  = W - Rright
-```
+$$
+\begin{aligned}
+R_{\mathrm{right}} &= \frac{J}{L}, \\
+R_{\mathrm{left}} &= W-R_{\mathrm{right}}.
+\end{aligned}
+$$
 
 For a cantilever fixed at the left end:
 
-```text
-Rleft = W
-Mfixed = J
-```
+$$
+\begin{aligned}
+R_{\mathrm{left}} &= W, \\
+M_{\mathrm{fixed}} &= J.
+\end{aligned}
+$$
 
 ### Shear and bending moment
 
-For a simply supported beam, at a section `x`, loads to the left contribute to the internal force and moment:
+For a simply supported beam, at a section $x$, let $c_j(x)=\min(x,b_j)$ and $\ell_j(x)=\max(0,c_j(x)-a_j)$ be the portion of uniform-load segment $j$ to the left of the section. Let $H$ denote the unit step function. The internal shear and moment are:
 
-```text
-V(x) = Rleft - Σ Pᵢ H(x - aᵢ) - Σ wⱼ ℓⱼ(x)
-M(x) = Rleft x - Σ Pᵢ max(0, x - aᵢ)
-       - Σ [ wⱼ ℓⱼ(x) (x - (aⱼ + cⱼ(x))/2) ]
-```
+$$
+\begin{aligned}
+V(x) &= R_{\mathrm{left}} - \sum_i P_i H(x-a_i) - \sum_j w_j\ell_j(x), \\
+M(x) &= R_{\mathrm{left}}x - \sum_i P_i\max(0,x-a_i) \\
+     &\quad - \sum_j w_j\ell_j(x)\left(x-\frac{a_j+c_j(x)}{2}\right).
+\end{aligned}
+$$
 
-Here `H` is the step function, `cⱼ(x) = min(x, bⱼ)`, and `ℓⱼ(x) = max(0, cⱼ(x) - aⱼ)` is the loaded length of uniform-load segment `j` to the left of the section. Each load segment is clipped to the beam span.
+For a cantilever, use the loads to the right of the section. Define $\ell_j^{r}(x)=\max(0,b_j-\max(x,a_j))$:
 
-For a cantilever, use the loads to the right of the section:
+$$
+\begin{aligned}
+V(x) &= -\sum_i P_i\mathbf{1}_{a_i\ge x} - \sum_j w_j\ell_j^{r}(x), \\
+M(x) &= -\sum_i P_i\max(0,a_i-x) \\
+     &\quad - \sum_j w_j\ell_j^{r}(x)\left(\frac{\max(x,a_j)+b_j}{2}-x\right),
+\end{aligned}
+$$
 
-```text
-V(x) = -Σ Pᵢ [aᵢ ≥ x] - Σ wⱼ max(0, bⱼ - max(x, aⱼ))
-M(x) = -Σ Pᵢ max(0, aᵢ - x)
-       - Σ [ wⱼ ℓⱼʳ(x) ((max(x, aⱼ) + bⱼ)/2 - x) ]
-```
-
-where `ℓⱼʳ(x) = max(0, bⱼ - max(x, aⱼ))`. The force and moment signs follow the implementation's downward-positive load convention; checks use the absolute maximum moment.
+where $\mathbf{1}_{a_i\ge x}$ is 1 when the point load lies at or to the right of $x$, and 0 otherwise. Every load segment is clipped to the beam span. These equations use the implementation's downward-positive load convention; checks use the absolute maximum moment.
 
 ### Elastic deflection and checks
 
-The software integrates the elastic beam equation numerically over a span grid that includes load locations and uniform-load boundaries:
+The software integrates the elastic beam equation numerically over a span grid containing regular samples, point-load locations, and uniform-load boundaries. Curvature, slope, and displacement satisfy:
 
-```text
-κ(x) = M(x) / (E I)          curvature
-dy/dx = θ(x)
-dθ/dx = κ(x)
-```
+$$
+\begin{aligned}
+\kappa(x) &= \frac{M(x)}{EI}, \\
+\frac{d\theta}{dx} &= \kappa(x), \\
+\frac{dy}{dx} &= \theta(x).
+\end{aligned}
+$$
 
-The trapezoidal rule integrates curvature to slope and slope to displacement. For a simply supported beam, a linear correction enforces `y(0) = y(L) = 0`. For a cantilever, the fixed-end slope and displacement start at zero. The reported maximum deflection is the largest absolute sampled displacement.
+The trapezoidal rule integrates curvature to slope and slope to displacement. For a simply supported beam, a linear correction enforces $y(0)=y(L)=0$. For a cantilever, the integration starts with $y(0)=0$ and $\theta(0)=0$. The reported maximum deflection is the largest absolute sampled displacement.
 
-```text
-fb = 12 |Mmax| / Sx          bending stress (ksi), Mmax in kip-ft
-δallow = 12 L / n            deflection limit (in), L in ft, n = 240 or 360
-PASS bending   if fb ≤ Fb
-PASS deflection if |y|max ≤ δallow
-```
+Bending stress and the selected deflection limit are:
 
-`E` is in ksi, `I` is in in⁴, and `Sx` is in in³. The factor 12 converts kip-ft to kip-in in the bending stress expression. The listed material properties and sections are in [spec.md](spec.md). The app uses the selected section's `E` and `I` for its displayed deflection; when evaluating a recommendation, it scales deflection in inverse proportion to each candidate section's `I`.
+$$
+\begin{aligned}
+f_b &= \frac{12\lvert M_{\max}\rvert}{S_x} && \text{(ksi, with $M_{\max}$ in kip-ft)}, \\
+\delta_{\mathrm{allow}} &= \frac{12L}{n} && \text{(in, with $L$ in ft and $n\in\{240,360\}$)}.
+\end{aligned}
+$$
+
+The checks pass when $f_b\le F_b$ and $\lvert y\rvert_{\max}\le\delta_{\mathrm{allow}}$. Here $E$ is in ksi, $I$ is in in$^4$, and $S_x$ is in in$^3$. The factor of 12 converts kip-ft to kip-in in the stress equation. The listed material properties and sections are in [spec.md](spec.md). The app uses the selected section's $E$ and $I$ for its displayed deflection; when evaluating a recommendation, it scales deflection inversely with each candidate's $I$.
 
 ## Validation tests
 

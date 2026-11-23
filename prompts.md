@@ -60,3 +60,9 @@ Added a project README with installation and usage instructions, scope, four val
 > push the changes
 
 Pushed the README and validation-figure commit to `origin/master`, then added this prompt log entry. The log update will also be committed and pushed so the remote contains the full current state.
+
+## 2026-11-23 14:04:57 -0700
+
+> Reformat the equations in the readme using mathjax or latek whichever is better supported in GitHub such that the equations are easier to read
+
+Reformatted the README's load resultant, reaction, shear, moment, deflection, stress, and limit equations with display LaTeX and aligned MathJax-compatible blocks. GitHub renders LaTeX math in Markdown using MathJax. What worked: the equations now use clear fractions, subscripts, sums, and alignment. What did not work: no GitHub preview was available in this turn; visual rendering should be checked after push.
