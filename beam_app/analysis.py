@@ -85,7 +85,7 @@ def analyze(beam: BeamInput) -> AnalysisResult:
         fixed_moment = first_moment
 
     # Include boundaries exactly, while limiting the regular sampling interval to 0.25 ft.
-    points = list(np.arange(0.0, span, min(0.25, span / 40))) + [span]
+    points = list(np.arange(0.0, span, min(0.025, span / 1600))) + [span]
     for load in loads:
         points.extend([load.position] if load.kind == "point" else [load.start, load.end])
     x = np.unique(np.round(points, 10))

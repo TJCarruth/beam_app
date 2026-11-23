@@ -29,6 +29,8 @@ class BeamPlots:
         fg = "#e7edf7" if dark else "#172235"
         grid = "#36445b" if dark else "#cbdcf2"
         colors = ["#2867e8", "#0e9f9a", "#8b5bd6"]
+        uniform_colors = ["#0e9f9a", "#e07a2d", "#7b61c9", "#d14b64", "#2692a5", "#8a9b32", "#cf5da8", "#526fbd"]
+        uniform_index = 0
         for ax in self.axes:
             ax.clear()
             ax.set_facecolor(bg)
@@ -50,10 +52,12 @@ class BeamPlots:
                 beam_ax.annotate("", (load.position, .12), (load.position, .82), arrowprops={"arrowstyle": "-|>", "color": "#2867e8", "lw": 1.8})
                 beam_ax.text(load.position, .9, f"{load.magnitude:g} k", ha="center", color=fg, fontsize=8)
             else:
-                beam_ax.plot([load.start, load.end], [.72, .72], color="#0e9f9a", lw=1.5)
+                load_color = uniform_colors[uniform_index % len(uniform_colors)]
+                uniform_index += 1
+                beam_ax.plot([load.start, load.end], [.72, .72], color=load_color, lw=1.5)
                 for xp in np.linspace(load.start, load.end, max(2, int((load.end-load.start)*2)+1)):
-                    beam_ax.annotate("", (xp, .12), (xp, .7), arrowprops={"arrowstyle": "-|>", "color": "#0e9f9a", "lw": 1})
-                beam_ax.text((load.start+load.end)/2, .82, f"{load.magnitude:g} k/ft", ha="center", color=fg, fontsize=8)
+                    beam_ax.annotate("", (xp, .12), (xp, .7), arrowprops={"arrowstyle": "-|>", "color": load_color, "lw": 1})
+                beam_ax.text((load.start+load.end)/2, .82, f"{load.magnitude:g} k/ft", ha="center", color=load_color, fontsize=8)
         beam_ax.text(0, -.62, f"Rₗ {result.reaction_left:.2f} k", ha="left", color=fg, fontsize=8)
         if beam.support == "simple":
             beam_ax.text(beam.span, -.62, f"Rᵣ {result.reaction_right:.2f} k", ha="right", color=fg, fontsize=8)
