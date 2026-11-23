@@ -1,0 +1,1 @@
+"""Beam Designer application package."""

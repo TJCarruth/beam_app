@@ -6,6 +6,12 @@ places loads on it, and picks a steel or lumber section. The app shows the
 shear, moment, and deflection diagrams and checks whether the beam is
 strong and stiff enough, updating instantly as anything changes.
 
+## Platform
+- Python desktop app using Tkinter, started with 'python app.py'
+- calculations with numpy, kept in their own module, separate from the window code.
+- Diagrams drawn with Matplotlib, embedded in the window; plot areas use a light blue background.
+- Minimum window size is 980 × 680 px; controls remain scrollable/narrow-window usable on smaller displays.
+
 ## Users
 A civil engineering student checking a homework beam, or an engineer
 sizing a floor beam or deck joist.
@@ -21,6 +27,7 @@ sizing a floor beam or deck joist.
   - Point loads can also be dragged along the beam in the drawing,
     snapping to 0.25 ft.
   - Loads that extend past the end of the beam are cut off at the end.
+  - Load magnitudes are nonnegative; positions are clamped to the beam span. Uniform-load start/end values are reordered if entered in reverse, and a zero-length uniform load has no effect. Point loads at supports are allowed.
 - Material and section, from these tables:
 
   Steel W-shapes (E = 29,000 ksi, allowable bending stress Fb = 30 ksi):
@@ -46,6 +53,7 @@ sizing a floor beam or deck joist.
 
 - Deflection limit: L/240 or L/360 (default L/360).
 - Self-weight is ignored.
+- Downward applied loads are positive. The reaction moment at a cantilever fixed end is shown as an output.
 
 ## Calculations
 - Reactions from statics.
@@ -61,6 +69,8 @@ sizing a floor beam or deck joist.
   lightest steel section that passes both checks (if two weigh the same,
   the one with the larger Ix), or the first lumber size in the table
   that passes.
+- Check values use absolute maximum moment and deflection. Diagram extrema are labeled with their signed value.
+- Calculations should agree with the validation examples within 1% or the shown rounding precision, whichever is larger.
 - Units: kips, ft, and kip-ft on screen; inches for deflection.
 
 ## Outputs
@@ -84,8 +94,9 @@ sizing a floor beam or deck joist.
 - Clean and professional, like a commercial engineering web app: light
   background, white cards with soft shadows, one accent color, a modern
   system font, generous spacing. No clutter.
+- Add a darkmode toggle.
 - Inputs in a panel on the left; drawing, diagrams, and checks on the
-  right. On a phone, the panels stack.
+  right. On narrow desktop windows, allow scrolling or compact controls rather than phone-style stacking.
 - Every input has a short label with units. Hovering over a check card
   explains the formula used.
 
@@ -102,6 +113,8 @@ sizing a floor beam or deck joist.
    end (PL^3/3EI); L/360 = 0.333 in, so deflection fails.
 4. Simply supported 12 ft 2x10 joist, uniform 0.05 kip/ft: max moment
    0.90 kip-ft; fb = 0.505 ksi; max deflection 0.147 in; both pass.
+5. Boundary cases: loads at either support, point loads at the span limits, reversed uniform-load endpoints, a uniform load clipped at the span, and zero-length uniform loads.
+6. Cantilever results include the support reaction and fixed-end moment; verify the 10 ft end-load case above.
 
 ## Out of scope
 - Self-weight, shear stress, lateral-torsional buckling, load
