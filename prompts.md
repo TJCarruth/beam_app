@@ -21,3 +21,9 @@ Implemented the Tkinter Beam Designer with separate models, section data, struct
 > If I have more than one uniform load, make them different colors. Ensure the program passes the validation check.
 
 Assigned uniform loads distinct colors in the beam drawing and refined analysis sampling to 0.025 ft so peak deflection positions match the reference checks. Expanded the automated cases to check deflection values and locations. All five analysis tests passed. The Tkinter window itself was not launched in this headless session, so GUI rendering was not visually inspected.
+
+## 2026-11-23 13:47:04 -0700
+
+> Scale the vector arrows according to the magnitude of the force.
+
+Scaled point-load and uniform-load arrow lengths by magnitude within each load type, with a bounded display range to keep arrows readable. Kept each uniform load's distinct color. What worked: arrow geometry now reflects relative force magnitude. What did not work: the GUI was not launched for visual inspection.
