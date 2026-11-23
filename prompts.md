@@ -48,3 +48,9 @@ Updated the local `origin` URL to `https://github.com/TJCarruth/beam_app.git` an
 > push
 
 Pushed the `master` branch to `origin` and configured upstream tracking for `origin/master`. The initial push succeeded. This prompt log entry was added afterward and is committed locally; it still needs to be pushed.
+
+## 2026-11-23 13:59:40 -0700
+
+> Add a README.md to the repo. Explain what the app is and how to use it. Include diagrams and figures for examples. Include the equations used in the software.
+
+Added a project README with installation and usage instructions, scope, four validation-case summaries, sign and unit conventions, the implemented statics/internal-force/deflection/check equations, and test command. Added an embedded SVG figure illustrating all four example beam/load layouts and schematic moment diagrams. What worked: documentation and figure are self-contained and link to the spec for section data. What did not work: no GUI screenshot was captured; the figure is a schematic rather than a live app image.

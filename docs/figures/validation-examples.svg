@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="720" viewBox="0 0 1120 720" role="img" aria-labelledby="title desc">
+  <title id="title">Beam Designer validation examples</title>
+  <desc id="desc">Four panels show three simply supported or cantilever beams with their loads and corresponding schematic bending moment shapes.</desc>
+  <rect width="1120" height="720" rx="18" fill="#f5f7fb"/>
+  <text x="40" y="48" font-family="Segoe UI,Arial,sans-serif" font-size="25" font-weight="700" fill="#172235">Reference beam cases</text>
+  <text x="40" y="75" font-family="Segoe UI,Arial,sans-serif" font-size="14" fill="#64748b">Load arrangement above · schematic bending moment below</text>
+  <g font-family="Segoe UI,Arial,sans-serif">
+    <g transform="translate(30 105)">
+      <rect width="520" height="270" rx="14" fill="white" stroke="#dce4ef"/>
+      <text x="22" y="32" font-size="17" font-weight="700" fill="#172235">1 · Simply supported, full-span uniform load</text>
+      <text x="22" y="54" font-size="13" fill="#64748b">L = 20 ft · W12x26 · w = 1 kip/ft</text>
+      <line x1="70" y1="112" x2="450" y2="112" stroke="#26364e" stroke-width="7" stroke-linecap="round"/>
+      <path d="M60 140 L70 120 L80 140Z M440 140 L450 120 L460 140Z" fill="#b9cbe2" stroke="#71819c"/>
+      <g stroke="#0e9f9a" stroke-width="2" marker-end="url(#arrow)"><line x1="85" y1="77" x2="85" y2="104"/><line x1="125" y1="77" x2="125" y2="104"/><line x1="165" y1="77" x2="165" y2="104"/><line x1="205" y1="77" x2="205" y2="104"/><line x1="245" y1="77" x2="245" y2="104"/><line x1="285" y1="77" x2="285" y2="104"/><line x1="325" y1="77" x2="325" y2="104"/><line x1="365" y1="77" x2="365" y2="104"/><line x1="405" y1="77" x2="405" y2="104"/></g>
+      <text x="260" y="72" text-anchor="middle" font-size="12" fill="#0e807b">1 kip/ft</text>
+      <text x="70" y="162" font-size="11" fill="#64748b">10 k</text><text x="450" y="162" text-anchor="end" font-size="11" fill="#64748b">10 k</text>
+      <line x1="42" y1="190" x2="478" y2="190" stroke="#cbd5e1"/>
+      <text x="22" y="213" font-size="11" fill="#64748b">M (kip-ft)</text>
+      <path d="M70 250 Q260 204 450 250 L450 250 L70 250Z" fill="#0e9f9a" fill-opacity=".15" stroke="#0e9f9a" stroke-width="2.5"/>
+      <text x="260" y="226" text-anchor="middle" font-size="12" font-weight="700" fill="#0e807b">+50 max</text>
+    </g>
+    <g transform="translate(570 105)">
+      <rect width="520" height="270" rx="14" fill="white" stroke="#dce4ef"/>
+      <text x="22" y="32" font-size="17" font-weight="700" fill="#172235">2 · Simply supported, point load</text>
+      <text x="22" y="54" font-size="13" fill="#64748b">L = 20 ft · W12x26 · P = 10 k at 5 ft</text>
+      <line x1="70" y1="112" x2="450" y2="112" stroke="#26364e" stroke-width="7" stroke-linecap="round"/>
+      <path d="M60 140 L70 120 L80 140Z M440 140 L450 120 L460 140Z" fill="#b9cbe2" stroke="#71819c"/>
+      <line x1="165" y1="72" x2="165" y2="105" stroke="#2867e8" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+      <text x="165" y="66" text-anchor="middle" font-size="12" fill="#2867e8">10 k</text>
+      <text x="70" y="162" font-size="11" fill="#64748b">7.5 k</text><text x="450" y="162" text-anchor="end" font-size="11" fill="#64748b">2.5 k</text>
+      <line x1="42" y1="190" x2="478" y2="190" stroke="#cbd5e1"/>
+      <text x="22" y="213" font-size="11" fill="#64748b">M (kip-ft)</text>
+      <path d="M70 250 L165 215 L450 250 L450 250 L70 250Z" fill="#0e9f9a" fill-opacity=".15" stroke="#0e9f9a" stroke-width="2.5"/>
+      <text x="165" y="231" text-anchor="middle" font-size="12" font-weight="700" fill="#0e807b">+37.5 max</text>
+    </g>
+    <g transform="translate(30 405)">
+      <rect width="520" height="270" rx="14" fill="white" stroke="#dce4ef"/>
+      <text x="22" y="32" font-size="17" font-weight="700" fill="#172235">3 · Cantilever, free-end point load</text>
+      <text x="22" y="54" font-size="13" fill="#64748b">L = 10 ft · W12x26 · P = 5 k at tip</text>
+      <line x1="82" y1="82" x2="82" y2="143" stroke="#71819c" stroke-width="6"/>
+      <line x1="82" y1="112" x2="450" y2="112" stroke="#26364e" stroke-width="7" stroke-linecap="round"/>
+      <line x1="450" y1="72" x2="450" y2="104" stroke="#2867e8" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+      <text x="450" y="66" text-anchor="middle" font-size="12" fill="#2867e8">5 k</text>
+      <text x="82" y="162" font-size="11" fill="#64748b">R = 5 k · M = 50 kip-ft</text>
+      <line x1="42" y1="190" x2="478" y2="190" stroke="#cbd5e1"/>
+      <text x="22" y="213" font-size="11" fill="#64748b">M (kip-ft)</text>
+      <path d="M82 215 L450 250 L450 250 L82 250Z" fill="#0e9f9a" fill-opacity=".15" stroke="#0e9f9a" stroke-width="2.5"/>
+      <text x="100" y="233" font-size="12" font-weight="700" fill="#0e807b">−50 at fixed end</text>
+    </g>
+    <g transform="translate(570 405)">
+      <rect width="520" height="270" rx="14" fill="white" stroke="#dce4ef"/>
+      <text x="22" y="32" font-size="17" font-weight="700" fill="#172235">4 · Simply supported, light uniform load</text>
+      <text x="22" y="54" font-size="13" fill="#64748b">L = 12 ft · 2x10 · w = 0.05 kip/ft</text>
+      <line x1="70" y1="112" x2="450" y2="112" stroke="#26364e" stroke-width="7" stroke-linecap="round"/>
+      <path d="M60 140 L70 120 L80 140Z M440 140 L450 120 L460 140Z" fill="#b9cbe2" stroke="#71819c"/>
+      <g stroke="#0e9f9a" stroke-width="2" marker-end="url(#arrow)"><line x1="100" y1="81" x2="100" y2="104"/><line x1="150" y1="81" x2="150" y2="104"/><line x1="200" y1="81" x2="200" y2="104"/><line x1="250" y1="81" x2="250" y2="104"/><line x1="300" y1="81" x2="300" y2="104"/><line x1="350" y1="81" x2="350" y2="104"/><line x1="400" y1="81" x2="400" y2="104"/></g>
+      <text x="260" y="72" text-anchor="middle" font-size="12" fill="#0e807b">0.05 kip/ft</text>
+      <line x1="42" y1="190" x2="478" y2="190" stroke="#cbd5e1"/>
+      <text x="22" y="213" font-size="11" fill="#64748b">M (kip-ft)</text>
+      <path d="M70 250 Q260 218 450 250 L450 250 L70 250Z" fill="#0e9f9a" fill-opacity=".15" stroke="#0e9f9a" stroke-width="2.5"/>
+      <text x="260" y="235" text-anchor="middle" font-size="12" font-weight="700" fill="#0e807b">+0.90 max</text>
+    </g>
+  </g>
+  <defs>
+    <marker id="arrow" markerWidth="7" markerHeight="7" refX="3.5" refY="6" orient="auto"><path d="M0 0 L3.5 7 L7 0" fill="none" stroke="#0e9f9a" stroke-width="1.4"/></marker>
+    <marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="4" refY="7" orient="auto"><path d="M0 0 L4 8 L8 0" fill="none" stroke="#2867e8" stroke-width="1.7"/></marker>
+  </defs>
+</svg>
