@@ -33,3 +33,12 @@ Scaled point-load and uniform-load arrow lengths by magnitude within each load t
 > commit current changes
 
 Committed the pending repository-instruction update together with this prompt log entry. Left generated Python bytecode caches untracked and out of version control.
+
+## 2026-11-23 13:54:44 -0700
+
+> 2026-11-23 13:54:44.017 [info] remote: Repository not found.\
+> fatal: repository 'https\://github.com/YOUR-USERNAME/beam_app.git/' not found
+>
+> Fix the link so it goes to TJCarruth/beam_app.git/
+
+Updated the local `origin` URL to `https://github.com/TJCarruth/beam_app.git` and confirmed fetch and push both use it. The earlier placeholder URL was the cause of the repository-not-found message. No remote push was attempted.
